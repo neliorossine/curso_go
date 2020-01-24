@@ -1,2 +1,2 @@
-# cursodego
-Estudos de Go
+# curso_go
+Estudos de Golang
