@@ -7,13 +7,25 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"sync"
+	"time"
 
-	"github.com/neliorossine/cursodego/defer/model"
+	"github.com/neliorossine/cursodego/goroutines/model"
 )
 
-func main() {
+var orquestrador sync.WaitGroup
 
-	arquivo, err := os.Open("cidades.csv")
+func main() {
+	orquestrador.Add(2)
+	go traduzirParaJSON("saopaulo")
+	go traduzirParaJSON("riodejaneiro")
+	orquestrador.Wait()
+}
+
+func traduzirParaJSON(nomeArquivo string) {
+
+	fmt.Println(time.Now(), " - Começando a tradução do arquivo: ", nomeArquivo)
+	arquivo, err := os.Open(nomeArquivo + ".csv")
 	if err != nil {
 		fmt.Println("[main] Houve um erro ao abrir o arquivo. Erro: ", err.Error())
 		return
@@ -27,7 +39,7 @@ func main() {
 		return
 	}
 
-	arquivoJSON, err := os.Create("cidades.json")
+	arquivoJSON, err := os.Create(nomeArquivo + ".json")
 	if err != nil {
 		fmt.Println("[main] Houve um erro ao abrir o arquivo JSON. Erro: ", err.Error())
 		return
@@ -55,4 +67,6 @@ func main() {
 	}
 	escritor.WriteString("\r\n]")
 	escritor.Flush()
+	fmt.Println(time.Now(), " - A tradução do arquivo: ", nomeArquivo, "foi finalizada")
+	orquestrador.Done()
 }
