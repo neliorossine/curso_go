@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/neliorossine/cursodego/banco_sql/model"
+	"github.com/neliorossine/cursodego/banco_mongo/model"
 )
 
 //Ola é o manipulador da requisição a rota /ola
