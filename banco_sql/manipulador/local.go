@@ -21,7 +21,7 @@ func Local(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sql := "selct country, city, telcode from place where telcode = ?"
+	sql := "select country, city, telcode from place where telcode = ?"
 	linha, err := repo.Db.Queryx(sql, codigoTelefone)
 	if err != nil {
 		http.Error(w, "Não foi possível pesquisar esse número.", http.StatusInternalServerError)

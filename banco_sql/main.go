@@ -24,7 +24,7 @@ func main() {
 	})
 	http.HandleFunc("/funcao", manipulador.Funcao)
 	http.HandleFunc("/ola", manipulador.Ola)
-	http.HandleFunc("/local", manipulador.Local)
+	http.HandleFunc("/local/", manipulador.Local)
 	fmt.Println("Estou escutando, comandante...")
 	http.ListenAndServe(":8181", nil)
 }
